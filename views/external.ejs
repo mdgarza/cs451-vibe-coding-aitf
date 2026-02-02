@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>External AI News & Products</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="nav">
+      <div class="brand">SVSU AI Hub</div>
+      <div>
+        <a href="/">Home</a>
+        <a href="/internal">Internal</a>
+        <a href="/external">External</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <h1>External AI News & Products</h1>
+      <p>This page is for external AI news and product links.</p>
+    </div>
+
+    <div class="card">
+      <h2>Post a new external link</h2>
+      <form method="POST" action="/external">
+        <div>
+          <label>Title</label>
+          <input type="text" name="title" />
+        </div>
+
+        <div style="margin-top: 10px;">
+          <label>URL</label>
+          <input type="text" name="url" placeholder="https://example.com" />
+        </div>
+
+        <div style="margin-top: 10px;">
+          <label>Note (optional)</label>
+          <textarea name="note" rows="4"></textarea>
+        </div>
+
+        <button type="submit">Post Link</button>
+      </form>
+    </div>
+
+    <div class="card">
+      <h2>Recent links</h2>
+
+      <% if (!links || links.length === 0) { %>
+        <p>No external links posted yet.</p>
+      <% } else { %>
+        <ul class="list">
+          <% links.forEach((l) => { %>
+            <li style="margin-bottom: 14px;">
+              <strong><%= l.title %></strong><br />
+              <span class="meta"><%= l.createdAt %></span><br />
+              <a href="<%= l.url %>" target="_blank" rel="noopener noreferrer"><%= l.url %></a>
+              <% if (l.note) { %>
+                <div><%= l.note %></div>
+              <% } %>
+            </li>
+          <% }) %>
+        </ul>
+      <% } %>
+    </div>
+  </div>
+</body>
+</html>

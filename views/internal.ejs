@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Internal AI Projects</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="nav">
+      <div class="brand">SVSU AI Hub</div>
+      <div>
+        <a href="/">Home</a>
+        <a href="/internal">Internal</a>
+        <a href="/external">External</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <h1>Internal AI Projects</h1>
+      <p>This page is for internal AI project announcements.</p>
+    </div>
+
+    <div class="card">
+      <h2>Post a new internal project</h2>
+      <form method="POST" action="/internal">
+        <div>
+          <label>Title</label>
+          <input type="text" name="title" />
+        </div>
+
+        <div style="margin-top: 10px;">
+          <label>Description</label>
+          <textarea name="description" rows="5"></textarea>
+        </div>
+
+        <button type="submit">Post</button>
+      </form>
+    </div>
+
+    <div class="card">
+      <h2>Recent posts</h2>
+
+      <% if (posts.length === 0) { %>
+        <p>No internal project posts yet.</p>
+      <% } else { %>
+        <% posts.forEach((p) => { %>
+          <div class="card" style="margin: 12px 0;">
+            <h3><%= p.title %></h3>
+            <div class="meta"><%= p.createdAt %></div>
+            <p><%= p.description %></p>
+
+            <h4>Comments</h4>
+            <% if (p.comments.length === 0) { %>
+              <p>No comments yet.</p>
+            <% } else { %>
+              <ul class="list">
+                <% p.comments.forEach((c) => { %>
+                  <li style="margin-bottom: 8px;">
+                    <div class="meta"><%= c.createdAt %></div>
+                    <div><%= c.text %></div>
+                  </li>
+                <% }) %>
+              </ul>
+            <% } %>
+
+            <form method="POST" action="/internal/<%= p.id %>/comment">
+              <label>Add a comment</label>
+              <input type="text" name="text" placeholder="Type comment..." />
+              <button type="submit">Comment</button>
+            </form>
+          </div>
+        <% }) %>
+      <% } %>
+    </div>
+  </div>
+</body>
+</html>
